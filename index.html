@@ -3,6 +3,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Examples from my notes</title>
   <style>
+  <script>
+  function updateBackgroundByTime() {
+    const hour = new Date().getHours(); // prende l'ora corrente (0-23)
+    if (hour >= 19 || hour < 7) {
+      // dopo le 19 fino alle 7 del mattino successivo
+      document.body.style.backgroundColor = "#000000";  // nero
+      document.body.style.color = "#ffffff";             // testo bianco per contrasto
+    } else {
+      // dalle 7 alle 19
+      document.body.style.backgroundColor = "#ffffff";  // bianco
+      document.body.style.color = "#000000";             // testo nero
+    }
+  }
+  updateBackgroundByTime();
+</script>
     html, body {
       height: 100%;
       margin: 0;
