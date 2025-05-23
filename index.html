@@ -16,86 +16,47 @@
       align-items: center;
     }
 
-    #note-window {
-      background-color: #fff;
-      width: 600px;
-      max-width: 90vw;
-      height: 450px;
-      max-height: 90vh;
-      border-radius: 14px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+#note-window {
+  background-color: #fff;
+  width: 90vw;         /* da 600px a 90% viewport width */
+  max-width: 600px;    /* limite max */
+  height: 70vh;        /* da 450px a 70% viewport height */
+  max-height: 450px;   /* limite max */
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 20px;
+}
 
-    #header {
-      background-color: #f6f6f6;
-      height: 48px;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      gap: 6px;
-      flex-shrink: 0;
-      user-select: none;
-    }
+@media (max-width: 768px) {
+  #note-window {
+    height: 60vh;
+  }
+  #text-container {
+    font-size: 1.1rem;
+    padding: 15px 25px 25px 25px;
+  }
+  #date-display {
+    font-size: 0.8rem;
+  }
+}
 
-    .mac-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
-      cursor: default;
-    }
-    .red-dot { background: #ff5f57; }
-    .yellow-dot { background: #febc2e; }
-    .green-dot { background: #28c840; }
-
-    #text-container {
-      padding: 10px 30px 20px 30px;
-      overflow-y: auto;
-      flex-grow: 1;
-      font-size: 1.2rem;
-      line-height: 1.3;
-      text-align: justify;
-      cursor: pointer;
-      user-select: text;
-      color: #000000;
-      background-color: #fff;
-      font-family: "SF Pro Text", "Helvetica Neue", sans-serif;
-      white-space: normal;
-      word-break: break-word;
-      position: relative;
-    }
-
-    #date-display {
-      font-size: 0.75rem;
-      color: #808080;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    #footer {
-      height: 12px;
-      background-color: #f6f6f6;
-      flex-shrink: 0;
-    }
-
-    @media (max-width: 480px) {
-      #note-window {
-        width: 90vw;
-        height: 60vh;
-      }
-      #text-container {
-        font-size: 1rem;
-        padding: 10px 20px;
-      }
-      #date-display {
-        font-size: 0.7rem;
-      }
-    }
-  </style>
+@media (max-width: 480px) {
+  #note-window {
+    height: 50vh;
+    margin: 10px;
+  }
+  #text-container {
+    font-size: 1rem;
+    padding: 10px 15px 20px 15px;
+  }
+  #date-display {
+    font-size: 0.7rem;
+  }
+}
+</style>
 </head>
 <body>
 
