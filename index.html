@@ -232,7 +232,7 @@
     let phraseOrder = [];
     let currentIndex = -1;
     let autoChangeTimer = null;
-    const typingSpeed = 80;
+    const typingSpeed = 85;
     const firstPhraseTimeout = 2500;
     const otherPhrasesTimeout = 2100;
     let typingInProgress = false;
@@ -255,7 +255,7 @@
       typingInProgress = true;
     cancelTyping = false;
     audio.currentTime = 0;
-    audio.playbackRate = 1.15;  
+    audio.playbackRate = 1.1;  
     audio.volume = 0.8;         
     audio.play();
       function typeStep() {
