@@ -1,4 +1,3 @@
-<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -163,14 +162,7 @@
     const dateDisplay = document.getElementById("date-display");
     const audio = document.getElementById("type-sound");
     let phraseOrder = [];
-    let currentIndex = 0;
-    shuffleArray(phrases);
-    phraseOrder = [...phrases.keys()];
-    // Mostra subito la prima frase senza typewriter
-    const firstPhrase = phrases[phraseOrder[currentIndex]];
-    contentDiv.textContent = firstPhrase;
-    updateDateDisplay();
-    resetAutoTimer(otherPhrasesTimeout); // imposta il timer per la prossima frase
+    let currentIndex = -1;
     let autoChangeTimer = null;
     const typingSpeed = 60;
     const firstPhraseTimeout = 3000;
