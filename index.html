@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,51 +14,87 @@
       justify-content: center;
       align-items: center;
     }
+    #note-window {
+    width: min(90vw, 600px);
+    aspect-ratio: 4 / 3;
+    max-height: 90vh;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: #fff;
+    }
 
-#note-window {
-  background-color: #fff;
-  width: 90vw;         /* da 600px a 90% viewport width */
-  max-width: 600px;    /* limite max */
-  height: 70vh;        /* da 450px a 70% viewport height */
-  max-height: 450px;   /* limite max */
-  border-radius: 14px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  margin: 20px;
-}
+    #header {
+      background-color: #f6f6f6;
+      height: 48px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 6px;
+      flex-shrink: 0;
+      user-select: none;
+    }
 
-@media (max-width: 768px) {
-  #note-window {
-    height: 60vh;
-  }
-  #text-container {
-    font-size: 1.1rem;
-    padding: 15px 25px 25px 25px;
-  }
-  #date-display {
-    font-size: 0.8rem;
-  }
-}
+    .mac-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
+      cursor: default;
+    }
+    .red-dot { background: #ff5f57; }
+    .yellow-dot { background: #febc2e; }
+    .green-dot { background: #28c840; }
 
-@media (max-width: 480px) {
-  #note-window {
-    height: 50vh;
-    margin: 10px;
-  }
-  #text-container {
-    font-size: 1rem;
-    padding: 10px 15px 20px 15px;
-  }
-  #date-display {
-    font-size: 0.7rem;
-  }
-}
-</style>
+    #text-container {
+      padding: 10px 30px 20px 30px;
+      overflow-y: auto;
+      flex-grow: 1;
+      font-size: 1.2rem;
+      line-height: 1.3;
+      text-align: justify;
+      cursor: pointer;
+      user-select: text;
+      color: #000000;
+      background-color: #fff;
+      font-family: "SF Pro Text", "Helvetica Neue", sans-serif;
+      white-space: normal;
+      word-break: break-word;
+      position: relative;
+    }
+
+    #date-display {
+      font-size: 0.75rem;
+      color: #808080;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    #footer {
+      height: 12px;
+      background-color: #f6f6f6;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+    #note-window {
+        width: 90vw;
+        height: calc(90vw * 0.75);
+      }
+      #text-container {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+      #date-display {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
 </head>
 <body>
-
   <div id="note-window">
     <div id="header">
       <div class="mac-dot red-dot"></div>
@@ -72,9 +107,7 @@
     </div>
     <div id="footer"></div>
   </div>
-
   <audio id="type-sound" src="410427__jamestcampbell__iphone_typing_jtc.wav" preload="auto" loop></audio>
-
   <script>
     const phrases = [
       "Cane mangia cane - my master thesis",
@@ -125,29 +158,24 @@
       "Cerchio con spine che entrano invece di uscire cerchio che ruota bianco su sfondo nero",
       "No thoughts only vibes"
     ];
-
     const container = document.getElementById("text-container");
     const contentDiv = document.getElementById("text-content");
     const dateDisplay = document.getElementById("date-display");
     const audio = document.getElementById("type-sound");
-
     let phraseOrder = [];
     let currentIndex = -1;
     let autoChangeTimer = null;
     const typingSpeed = 60;
     const firstPhraseTimeout = 3000;
     const otherPhrasesTimeout = 2500;
-
     let typingInProgress = false;
     let cancelTyping = false;
-
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
     }
-
     function resetAutoTimer(timeout) {
       clearTimeout(autoChangeTimer);
       autoChangeTimer = setTimeout(() => {
@@ -156,7 +184,6 @@
         }
       }, timeout);
     }
-
     function typeWriter(text, callback, i = 0) {
       typingInProgress = true;
     cancelTyping = false;
@@ -164,7 +191,6 @@
     audio.playbackRate = 1.2;  // aumentiamo la velocità del 15%
     audio.volume = 0.5;         
     audio.play();
-
       function typeStep() {
         if (cancelTyping) {
           audio.pause();
@@ -183,11 +209,9 @@
           if (callback) callback();
         }
       }
-
       contentDiv.textContent = "";
       typeStep();
     }
-
     function showNextPhrase() {
       if (typingInProgress) {
         cancelTyping = true;
@@ -197,12 +221,10 @@
         shuffleArray(phraseOrder);
       }
       currentIndex = phraseOrder.shift();
-
       typeWriter(phrases[currentIndex], () => {
         resetAutoTimer(otherPhrasesTimeout);
       });
     }
-
     function updateDateTime() {
       const now = new Date();
       const options = { day: '2-digit', month: 'long', year: 'numeric' };
@@ -210,17 +232,13 @@
       const timeString = now.toLocaleTimeString(undefined, { hour12: false });
       dateDisplay.textContent = `${dateString} — ${timeString}`;
     }
-
     setInterval(updateDateTime, 1000);
     updateDateTime();
-
     window.onload = () => {
   phraseOrder = [...Array(phrases.length).keys()];
   shuffleArray(phraseOrder);
-
   showNextPhrase(); // effetto macchina da scrivere subito
 };
-
     container.addEventListener("click", () => {
       if (typingInProgress) {
         cancelTyping = true;
