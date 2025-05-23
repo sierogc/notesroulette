@@ -297,7 +297,7 @@
       const options = { day: '2-digit', month: 'long', year: 'numeric' };
       const dateString = now.toLocaleDateString(undefined, options);
       const timeString = now.toLocaleTimeString(undefined, { hour12: false });
-      dateDisplay.textContent = `${dateString} — ${timeString}`;
+      dateDisplay.textContent = `${dateString} at ${timeString}`;
     }
     setInterval(updateDateTime, 1000);
     updateDateTime();
