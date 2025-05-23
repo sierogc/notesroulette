@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Examples from my notes</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-color: #fff;
+      font-family: "SF Pro Text", "Helvetica Neue", sans-serif;
+      color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #note-window {
+      background-color: #fff;
+      width: 600px;
+      max-width: 90vw;
+      height: 450px;
+      max-height: 90vh;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #header {
+      background-color: #f6f6f6;
+      height: 48px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 6px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .mac-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2) inset;
+      cursor: default;
+    }
+    .red-dot { background: #ff5f57; }
+    .yellow-dot { background: #febc2e; }
+    .green-dot { background: #28c840; }
+
+    #text-container {
+      padding: 10px 30px 20px 30px;
+      overflow-y: auto;
+      flex-grow: 1;
+      font-size: 1.2rem;
+      line-height: 1.3;
+      text-align: justify;
+      cursor: pointer;
+      user-select: text;
+      color: #000000;
+      background-color: #fff;
+      font-family: "SF Pro Text", "Helvetica Neue", sans-serif;
+      white-space: normal;
+      word-break: break-word;
+      position: relative;
+    }
+
+    #date-display {
+      font-size: 0.75rem;
+      color: #808080;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    #footer {
+      height: 12px;
+      background-color: #f6f6f6;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      #note-window {
+        width: 90vw;
+        height: 60vh;
+      }
+      #text-container {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+      #date-display {
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="note-window">
+    <div id="header">
+      <div class="mac-dot red-dot"></div>
+      <div class="mac-dot yellow-dot"></div>
+      <div class="mac-dot green-dot"></div>
+    </div>
+    <div id="text-container">
+      <div id="date-display"></div>
+      <div id="text-content"></div>
+    </div>
+    <div id="footer"></div>
+  </div>
+
+  <audio id="type-sound" src="410427__jamestcampbell__iphone_typing_jtc.wav" preload="auto" loop></audio>
+
+  <script>
+    const phrases = [
+      "Cane mangia cane - my master thesis",
+      "Art, imitation and the illusion of originality. Push and pull content. Melancholy and painful. When you are in it you cant see it.",
+      "Canto (salire o scendere)",
+      "I did not stop doing artwork. I repeat, I did not stop working",
+      "Forget is like dying",
+      "Three type of detestable performance: reading adelphi in a coffe plaza bar...",
+      "Context is everything",
+      "L’animale non aderisce alla superficialità",
+      "not a gangster but still",
+      "Spazzolino dentifricio deodorante dopobarba acqua scrub",
+      "I HATE WHEN SOME NEPO SHARE A SONG THAT I LOVE",
+      "One thing fun that I discovered is that whenever I see some artworks and I dont fuck with it...",
+      "World is trash hold this. World is ending but at least art looks hype. Vibin through that existential dread. Vibing through relatable artworks = relatable is possible only thanks to being real",
+      "Belluscone (film)",
+      "Any curator reading: I have a plan in mind for an exhibition about ketamine hit me up",
+      "My actual research aim to develop a framework recognizable by the name of: Napoli",
+      "I come from a small town on the outskirts of Napoli, literally in the middle of nowhere. Death has taught me more than love ever could. My uncle hanged himself, my love interest died from a brain hemorrhage, and my best friend perished in a car accident. Nothing ever suggested that I had a connection with art. All I ever wanted to do was try to understand why things happen.",
+      "La chimera. Tombarolo. Ossa etrusche cadavere osso cancro il cadavere diventa polvere. Scavare ossa. restauro. Restauro",
+      "What If the future is not in black but instead in grey?",
+      "I love When art needs no talent. I hate When art is not raw honesty",
+      "My art is conceptualized for all the bros and sis that for the streets listen to “need a gram?”",
+      "I like solo show because I can do everything by myself: text, press, graphic, artworks, set design, immaculate skill set",
+      "What I find amusing in art is that for its nature artists stands beetween the need for genuine human emotion and the contrive nature of fame and celebrity. The basic center in our activity grows in contraddiction",
+      "Ragnatela di fili rossi (touch designer) come livello intermediario di effetto. Centro punto focale sul centro dello schermo fascio di luce con immagini in key coloring che scorrono sopra",
+      "Musiche stanze gigante",
+      "While you were standing still wondering If it was worth trying I was in a stranger bathroom passed out in a k hole",
+      "Pulled pork 10 euro",
+      "MAKE YOU WANNA FIND OUT EVERYTHING THAT YOU DONT KNOW YOU WANT FEEL",
+      "Lowkey want to gatekeep my stories. Nothing more cringe than seeing Likes from people I dislike",
+      "New show in March… doing",
+      "There is not a black rapper that I cant thank",
+      "Yesterday I was in this chic bar near the t.station and When I say chic I mean radical chic. You know Milan energy? I mean bao with zucchine kind of Milan chic energy. fruit of the loom shirt with the logo of the bar printed on it kind of Milan chic energy. I was out of cigarette and omw to buy a pack. I have no cash and nothing accept card and When I say nothing i mean nothing. So I go to the Atm to take some cash and When I turn right a man with black teeth and a weird face looks at me smiling. He is cracking a rock inside his hands. I take my money and go out he only coughs and inhale.",
+      "Wait for my next artwork… setting a milestone",
+      "Dear curator, If u dont let me break into the industry I might turn myself in",
+      "My art is a nono to bros that aint sold a gram",
+      "Simbolo della pace tatuato sull’indice",
+      "togliere. Non devo pensare al pubblico ma solo all’opera. L’opera deve essere vista criticamente, esiste per se stessa. Non serve mettere più cosa ma metterne una che racconta tutto. Non devo spiegare niente",
+      "A Sniper is aiming at you right now",
+      "If you ever meet me in One of those fancy dinner table, with candles, different plate for every single meal, white croquette vibe and coraline polachek fake music. Lol Thats not me dumbass",
+      "You have an enemy, friendo. Have you said your mantra? Thank you again for the sacrifice you ve made",
+      "Questo ragazzo ricco e gay ma davvero molto ricco e gay si avvicina a me dopo una performance ed era tipo wow intenso. Io ero tipo si, e lui era tipo ma davvero cazzo. Puoi dirmi una cosa? E io sì e lui era tipo ma sta roba ti è successa veramente? E io ho pensato fosse divertente come accusa e mi sono messo a ridere e lui mi fa aspetta e io cosa? E lui mi dice sussurrandomi all’orecchio dai dimmi la verità e io ok e lui sussurrandomi davvero vicino l’orecchio mi fa ma tipo ste cose che hai scritto sono vere? Gli spiego che si erano tutte cose vere che mi erano successe",
+      "Alone > together",
+      "Well, even my supposed art can be not so researched, deep theorical, political, but its true, spoken from the heart and fully felt - for that its real, the rest is for the wicked",
+      "FUCK WHOEVER SAYS MY ART IS A SAFE SPACE",
+      "I swear. I fucking swear If anybody dares to say my art is a",
+      "Cerchio con spine che entrano invece di uscire cerchio che ruota bianco su sfondo nero",
+      "No thoughts only vibes"
+    ];
+
+    const container = document.getElementById("text-container");
+    const contentDiv = document.getElementById("text-content");
+    const dateDisplay = document.getElementById("date-display");
+    const audio = document.getElementById("type-sound");
+
+    let phraseOrder = [];
+    let currentIndex = -1;
+    let autoChangeTimer = null;
+    const typingSpeed = 60;
+    const firstPhraseTimeout = 3000;
+    const otherPhrasesTimeout = 2500;
+
+    let typingInProgress = false;
+    let cancelTyping = false;
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function resetAutoTimer(timeout) {
+      clearTimeout(autoChangeTimer);
+      autoChangeTimer = setTimeout(() => {
+        if (!typingInProgress) {
+          showNextPhrase();
+        }
+      }, timeout);
+    }
+
+    function typeWriter(text, callback, i = 0) {
+      typingInProgress = true;
+    cancelTyping = false;
+    audio.currentTime = 0;
+    audio.playbackRate = 1.2;  // aumentiamo la velocità del 15%
+    audio.volume = 0.5;         
+    audio.play();
+
+      function typeStep() {
+        if (cancelTyping) {
+          audio.pause();
+          audio.currentTime = 0;
+          typingInProgress = false;
+          return;
+        }
+        if (i < text.length) {
+          contentDiv.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeStep, typingSpeed);
+        } else {
+          audio.pause();
+          audio.currentTime = 0;
+          typingInProgress = false;
+          if (callback) callback();
+        }
+      }
+
+      contentDiv.textContent = "";
+      typeStep();
+    }
+
+    function showNextPhrase() {
+      if (typingInProgress) {
+        cancelTyping = true;
+      }
+      if (phraseOrder.length === 0) {
+        phraseOrder = [...Array(phrases.length).keys()];
+        shuffleArray(phraseOrder);
+      }
+      currentIndex = phraseOrder.shift();
+
+      typeWriter(phrases[currentIndex], () => {
+        resetAutoTimer(otherPhrasesTimeout);
+      });
+    }
+
+    function updateDateTime() {
+      const now = new Date();
+      const options = { day: '2-digit', month: 'long', year: 'numeric' };
+      const dateString = now.toLocaleDateString(undefined, options);
+      const timeString = now.toLocaleTimeString(undefined, { hour12: false });
+      dateDisplay.textContent = `${dateString} — ${timeString}`;
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    window.onload = () => {
+  phraseOrder = [...Array(phrases.length).keys()];
+  shuffleArray(phraseOrder);
+
+  showNextPhrase(); // effetto macchina da scrivere subito
+};
+
+    container.addEventListener("click", () => {
+      if (typingInProgress) {
+        cancelTyping = true;
+        contentDiv.textContent = phrases[currentIndex];
+        resetAutoTimer(otherPhrasesTimeout);
+      } else {
+        showNextPhrase();
+      }
+    });
+  </script>
+</body>
+</html>
