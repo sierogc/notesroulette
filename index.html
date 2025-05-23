@@ -107,7 +107,7 @@
     </div>
     <div id="footer"></div>
   </div>
-  <audio id="type-sound" src="typingphone-101683.mp3" preload="auto" loop></audio>
+  <audio id="type-sound" src="iphone-keyboard-typing-sound-effect-336778.mp3" preload="auto" loop></audio>
   <script>
     const phrases = [
       "Cane mangia cane - my master thesis",
@@ -163,7 +163,14 @@
     const dateDisplay = document.getElementById("date-display");
     const audio = document.getElementById("type-sound");
     let phraseOrder = [];
-    let currentIndex = -1;
+    let currentIndex = 0;
+    shuffleArray(phrases);
+    phraseOrder = [...phrases.keys()];
+    // Mostra subito la prima frase senza typewriter
+    const firstPhrase = phrases[phraseOrder[currentIndex]];
+    contentDiv.textContent = firstPhrase;
+    updateDateDisplay();
+    resetAutoTimer(otherPhrasesTimeout); // imposta il timer per la prossima frase
     let autoChangeTimer = null;
     const typingSpeed = 60;
     const firstPhraseTimeout = 3000;
