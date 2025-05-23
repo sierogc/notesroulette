@@ -247,6 +247,11 @@
         showNextPhrase();
       }
     });
-  </script>
+    document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    audio.pause();
+  }
+});
+</script>
 </body>
 </html>
