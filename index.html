@@ -164,7 +164,7 @@
     let phraseOrder = [];
     let currentIndex = -1;
     let autoChangeTimer = null;
-    const typingSpeed = 60;
+    const typingSpeed = 50;
     const firstPhraseTimeout = 3000;
     const otherPhrasesTimeout = 2500;
     let typingInProgress = false;
@@ -187,7 +187,7 @@
       typingInProgress = true;
     cancelTyping = false;
     audio.currentTime = 0;
-    audio.playbackRate = 1.45;  // aumentiamo la velocità del 15%
+    audio.playbackRate = 1.35;  // aumentiamo la velocità del 15%
     audio.volume = 0.7;         
     audio.play();
       function typeStep() {
